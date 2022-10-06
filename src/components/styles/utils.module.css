@@ -1,0 +1,35 @@
+.updateNote {
+    position: relative;
+    width: 270px;
+    min-height: 250px;
+    margin: 10px auto 20px auto;
+    background: #fff;
+    padding: 15px;
+    border-radius: 7px;
+   
+  }
+  .updateNote input,
+  .updateNote textarea {
+  width: 100%;
+  border: none;
+  padding: 4px;
+  outline: none;
+  font-size: 1.2em;
+  font-family: inherit;
+  resize: none;
+}
+.updateNote button {
+  position: absolute;
+  right: 18px;
+  bottom: -18px;
+  background: #f5ba13;
+  color: #fff;
+  border: none;
+  border-radius: 7px;
+  
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  padding: 10px;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  outline: none;
+}

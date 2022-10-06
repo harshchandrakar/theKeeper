@@ -9,12 +9,14 @@ function Note(props) {
   const handlePin = () => {
     props.onPin(props.id);
   };
-
+  const handleEdit = () => {
+    props.onEdit(props.title, props.content, props.id);
+  };
   return (
     <div className={props.pinned ? classes.pinned : classes.note}>
       <div>
         <div className={classes.title}>
-          <h1>{props.title}</h1>
+          <h1 onClick={handleEdit}>{props.title}</h1>
           <PushPinRoundedIcon
             sx={{
               color: props.pinned ? "#f5ba13" : "gray",
@@ -24,7 +26,7 @@ function Note(props) {
           />
         </div>
 
-        <p>{props.content}</p>
+        <p onClick={handleEdit}>{props.content}</p>
       </div>
       <button onClick={handleClick}>
         <DeleteIcon />

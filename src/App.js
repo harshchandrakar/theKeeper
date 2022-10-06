@@ -1,13 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import Header from "./components/Header";
 import Note from "./components/Note";
 import CreateArea from "./components/CreateArea";
 import classes from "./components/styles/CreateArea.module.css";
 import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
 import ArrowBackIosNewRoundedIcon from "@mui/icons-material/ArrowBackIosNewRounded";
+import DataPopUp from "./components/utils/DataPopUp";
 function App() {
   const [notes, setNotes] = useState([]);
   const [page, setPage] = useState(0);
+  const [edit, setEdit] = useState(false);
+  const [data, setData] = useState({
+    title: "",
+    content: "",
+    id: null,
+  });
   function addNote(newNote) {
     setNotes((prevNotes) => {
       let pinned = prevNotes.filter((item) => {
@@ -60,11 +67,60 @@ function App() {
       });
     }
   };
+  const handleClose = useCallback(
+    (title, content, id) => {
+      if (!edit) {
+        setData({
+          title: title,
+          content: content,
+          id: id,
+        });
+        setEdit(true);
+      } else {
+        setData({
+          title: "",
+          content: "",
+          id: null,
+        });
+        setEdit(false);
+      }
+    },
+    [data]
+  );
+
+  const handleupdate = (title, content, id) => {
+    let changes = notes[id];
+    changes["title"] = title;
+    changes["content"] = content;
+    setNotes((prev) => {
+      const data = prev.filter((noteItem, index) => {
+        return index !== id;
+      });
+      return [
+        ...data.filter((items) => {
+          return items.pinned === true;
+        }),
+        changes,
+        ...data.filter((items) => {
+          return items.pinned !== true;
+        }),
+      ];
+    });
+    setEdit(false);
+  };
 
   return (
     <div className="App">
       <Header />
       <CreateArea onAdd={addNote} />
+      <DataPopUp
+        open={edit}
+        handleClose={handleClose}
+        title={data.title}
+        content={data.content}
+        onUpdate={handleupdate}
+        id={data.id}
+      />
       {notes.length >= 6 && (
         <div className={classes.navigator}>
           <ArrowBackIosNewRoundedIcon
@@ -101,6 +157,7 @@ function App() {
               pinned={noteItem.pinned}
               onDelete={deleteNote}
               onPin={pinNotes}
+              onEdit={handleClose}
             />
           )
         );
