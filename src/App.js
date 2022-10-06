@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState } from "react";
 import Header from "./components/Header";
 import Note from "./components/Note";
 import CreateArea from "./components/CreateArea";
@@ -67,26 +67,23 @@ function App() {
       });
     }
   };
-  const handleClose = useCallback(
-    (title, content, id) => {
-      if (!edit) {
-        setData({
-          title: title,
-          content: content,
-          id: id,
-        });
-        setEdit(true);
-      } else {
-        setData({
-          title: "",
-          content: "",
-          id: null,
-        });
-        setEdit(false);
-      }
-    },
-    [data]
-  );
+  const handleClose = (title, content, id) => {
+    if (!edit) {
+      setData({
+        title: title,
+        content: content,
+        id: id,
+      });
+      setEdit(true);
+    } else {
+      setData({
+        title: "",
+        content: "",
+        id: null,
+      });
+      setEdit(false);
+    }
+  };
 
   const handleupdate = (title, content, id) => {
     let changes = notes[id];
