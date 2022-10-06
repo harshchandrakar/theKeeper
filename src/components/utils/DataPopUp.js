@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import Dialog from "@mui/material/Dialog";
-import Fab from "@mui/material/Fab";
-import Zoom from "@mui/material/Zoom";
 import classes from "../styles/utils.module.css";
 
 function DataPopUp(props) {
@@ -16,7 +14,6 @@ function DataPopUp(props) {
       content: props.content,
       pinned: false,
     });
-    console.log(note);
   }, [props]);
 
   function handleChange(event) {
